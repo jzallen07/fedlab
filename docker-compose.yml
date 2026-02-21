@@ -1,0 +1,114 @@
+services:
+  server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command:
+      [
+        "python",
+        "-m",
+        "src.server.app",
+        "--host",
+        "0.0.0.0",
+        "--port",
+        "8080",
+        "--rounds",
+        "3",
+        "--run-id",
+        "docker-run",
+        "--monitor-url",
+        "http://monitor-api:8090",
+      ]
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./artifacts/server:/app/artifacts/server
+    depends_on:
+      - monitor-api
+
+  client-1:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command:
+      [
+        "python",
+        "-m",
+        "src.client.app",
+        "start",
+        "--server-address",
+        "server:8080",
+        "--client-id",
+        "1",
+        "--run-id",
+        "docker-run",
+        "--monitor-url",
+        "http://monitor-api:8090",
+      ]
+    depends_on:
+      - server
+
+  client-2:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command:
+      [
+        "python",
+        "-m",
+        "src.client.app",
+        "start",
+        "--server-address",
+        "server:8080",
+        "--client-id",
+        "2",
+        "--run-id",
+        "docker-run",
+        "--monitor-url",
+        "http://monitor-api:8090",
+      ]
+    depends_on:
+      - server
+
+  client-3:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command:
+      [
+        "python",
+        "-m",
+        "src.client.app",
+        "start",
+        "--server-address",
+        "server:8080",
+        "--client-id",
+        "3",
+        "--run-id",
+        "docker-run",
+        "--monitor-url",
+        "http://monitor-api:8090",
+      ]
+    depends_on:
+      - server
+
+  monitor-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command:
+      [
+        "python",
+        "-m",
+        "src.monitor.app",
+        "--host",
+        "0.0.0.0",
+        "--port",
+        "8090",
+        "--db-path",
+        "/app/artifacts/monitor/monitor.db",
+      ]
+    ports:
+      - "8090:8090"
+    volumes:
+      - ./artifacts/monitor:/app/artifacts/monitor

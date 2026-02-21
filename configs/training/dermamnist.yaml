@@ -1,0 +1,39 @@
+dataset:
+  id: dermamnist
+  name: DermaMNIST
+  num_labels: 7
+phase: B
+run:
+  seed: 20260221
+  num_clients: 3
+  rounds: 3
+  default_train_mode: head_only
+training:
+  defaults:
+    per_device_train_batch_size: 8
+    per_device_eval_batch_size: 8
+    gradient_accumulation_steps: 2
+    num_train_epochs: 1
+    weight_decay: 0.01
+    warmup_ratio: 0.05
+    logging_steps: 10
+    eval_strategy: epoch
+    save_strategy: "no"
+    dataloader_num_workers: 0
+    max_grad_norm: 1.0
+    fp16: false
+    bf16: false
+  learning_rates:
+    head_only: 0.0005
+    unfreeze_last_block: 0.0001
+  mps_overrides:
+    per_device_train_batch_size: 4
+    per_device_eval_batch_size: 4
+    gradient_accumulation_steps: 2
+device_profiles:
+  cpu:
+    deterministic: true
+  mps:
+    enabled_by_default: false
+    fallback_to_cpu: true
+    set_pytorch_mps_fallback: true
