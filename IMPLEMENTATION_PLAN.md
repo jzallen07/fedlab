@@ -319,7 +319,7 @@ Status keys:
 | Status | ID | Owner | Depends On | Work Chunk | Validation | Commit Snippet |
 |---|---|---|---|---|---|---|
 | [x] | I04 | Eng1 | A06,M06,U06 | Extend compose stack with monitor-api and dashboard services plus SQLite volume mount. | Compose stack starts all services cleanly with persisted monitor DB. | `chore(I04): add monitor dashboard and sqlite volume to compose` |
-| [ ] | I05 | Pair | I04,U07,U09 | Add Docker e2e smoke script that runs rounds and verifies dashboard event receipt and control actions. | E2E smoke command passes. | `test(I05): add docker realtime and control e2e smoke test` |
+| [x] | I05 | Pair | I04,U07,U09 | Add Docker e2e smoke script that runs rounds and verifies dashboard event receipt and control actions. | E2E smoke command passes. | `test(I05): add docker realtime and control e2e smoke test` |
 | [ ] | I06 | Eng2 | I01 | Create convergence notebook reading generated artifacts and telemetry exports. | Notebook executes end-to-end. | `feat(I06): add convergence and per-client analysis notebook` |
 | [ ] | I07 | Pair | I05,I06,D03 | Update README with setup, runbook, architecture, troubleshooting, and screenshots. | Fresh clone runbook validated by both engineers. | `docs(I07): finalize runbook and dashboard docs` |
 | [ ] | R01 | Pair | I07 | Execute release readiness checklist and mark MVP complete. | All gates G0-G5 and G1A/G1B/G1C green. | `chore(R01): complete mvp release readiness checklist` |
