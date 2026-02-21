@@ -70,6 +70,20 @@ def test_load_phase_run_profile(tmp_path: Path) -> None:
     assert profile.repeat_runs == 2
 
 
+@pytest.mark.parametrize(
+    ("profile_path", "dataset_id"),
+    [
+        ("configs/profiles/bloodmnist_baseline.yaml", "bloodmnist"),
+        ("configs/profiles/dermamnist_extension.yaml", "dermamnist"),
+    ],
+)
+def test_repository_profile_configs_load(profile_path: str, dataset_id: str) -> None:
+    profile = load_phase_run_profile(Path(profile_path))
+    assert profile.dataset_id == dataset_id
+    assert profile.requested_device == "cpu"
+    assert profile.repeat_runs >= 1
+
+
 def test_run_phase_profile_repeatable(
     monkeypatch: pytest.MonkeyPatch,
     tmp_path: Path,
