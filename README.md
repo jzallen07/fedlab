@@ -217,7 +217,6 @@ uv run python scripts/execute_notebook.py notebooks/convergence_analysis.ipynb
   - Use `--device cpu` in script commands.
   - Profile configs in `configs/profiles/*.yaml` are CPU-tuned defaults.
 
-## Planning and Execution Doc
+## Project Docs
 
-- Implementation plan and two-engineer commit chunks: `IMPLEMENTATION_PLAN.md`
 - Release readiness checklist and gate evidence: `docs/release-readiness.md`

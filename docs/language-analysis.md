@@ -1,7 +1,7 @@
 # FedForge Language Analysis: Python vs TypeScript vs Rust vs Zig
 
 **Date:** 2026-02-21
-**Context:** Evaluating which language to use for building FedForge end-to-end, based on the requirements in [PRD.md](../PRD.md).
+**Context:** Evaluating which language to use for building FedForge end-to-end based on project requirements.
 
 ---
 
@@ -16,9 +16,9 @@ FedForge requires:
 - **Data Handling:** Non-IID dataset partitioning, data loading pipelines
 - **Visualization:** Convergence curves, per-client metrics (Jupyter notebooks)
 - **Privacy (nice-to-have):** Differential privacy, secure aggregation
-- **Framework:** The PRD specifies Flower (flwr) + PyTorch
+- **Framework:** Current architecture uses Flower (flwr) + PyTorch
 
-The PRD does not explicitly mandate Python, but the proposed directory structure (`.py` files, `pyproject.toml`) and framework choices (Flower, PyTorch) are Python-native.
+The requirements do not explicitly mandate Python, but the proposed directory structure (`.py` files, `pyproject.toml`) and framework choices (Flower, PyTorch) are Python-native.
 
 ---
 
