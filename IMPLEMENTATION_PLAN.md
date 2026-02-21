@@ -311,7 +311,7 @@ Status keys:
 |---|---|---|---|---|---|---|
 | [x] | D00 | Eng2 | B04 | Add data quality and preprocessing audit pipeline (class balance, split integrity, leakage checks) for all three datasets. | Audit report artifacts generated for Blood/Derma/Path. | `feat(D00): add medmnist preprocessing and data quality audits` |
 | [x] | D00A | Eng2 | B05 | Add hardware-mode validation script for `cpu` and optional `mps` detection/fallback behavior. | Validation shows deterministic CPU baseline and successful fallback behavior. | `test(D00A): add cpu and mps fallback validation` |
-| [ ] | D01 | Eng2 | I03,D00,D00A | Establish baseline FL run profile for `BloodMNIST` (rounds, clients, batch size) and store reference metrics. | Repeatable baseline run completes on laptop CPU. | `feat(D01): add bloodmnist baseline run profile` |
+| [x] | D01 | Eng2 | I03,D00,D00A | Establish baseline FL run profile for `BloodMNIST` (rounds, clients, batch size) and store reference metrics. | Repeatable baseline run completes on laptop CPU. | `feat(D01): add bloodmnist baseline run profile` |
 | [ ] | D02 | Eng2 | D01 | Add and validate `DermaMNIST` run profile with tuned local CPU settings. | DermaMNIST profile run completes and metrics export is valid. | `feat(D02): add dermamnist extension run profile` |
 | [ ] | D03 | Eng2 | D02 | Add and validate `PathMNIST` run profile with constrained rounds for local CPU runtime. | PathMNIST profile run completes and metrics export is valid. | `feat(D03): add pathmnist extension run profile` |
 
