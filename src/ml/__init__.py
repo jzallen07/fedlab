@@ -1,5 +1,13 @@
 """Machine-learning modules for FedForge."""
 
+from src.ml.audit import (
+    DatasetAuditReport,
+    LeakageAudit,
+    SplitAudit,
+    audit_all_medmnist_datasets,
+    audit_medmnist_dataset,
+    write_audit_report,
+)
 from src.ml.config import (
     ManifestValidationError,
     ResolvedRunConfig,
@@ -12,6 +20,13 @@ from src.ml.data import (
     prepare_all_medmnist_datasets,
     prepare_medmnist_dataset,
     write_preparation_report,
+)
+from src.ml.hardware import (
+    DatasetHardwareValidation,
+    probe_mps_available,
+    validate_all_hardware_modes,
+    validate_dataset_hardware_modes,
+    write_hardware_validation_report,
 )
 from src.ml.metrics import build_compute_metrics_fn, load_accuracy_metric
 from src.ml.model import (
@@ -39,14 +54,20 @@ from src.ml.trainer import TrainerRoundResult, create_trainer, run_trainer_round
 
 __all__ = [
     "MODEL_ID_DEIT_TINY",
+    "DatasetAuditReport",
+    "DatasetHardwareValidation",
+    "LeakageAudit",
     "ManifestValidationError",
     "MedMNISTPreparationSummary",
     "PartitionResult",
     "PreprocessMetadata",
     "ResolvedRunConfig",
+    "SplitAudit",
     "SUPPORTED_MEDMNIST_DATASETS",
     "SUPPORTED_SKEW_PRESETS",
     "apply_train_mode",
+    "audit_all_medmnist_datasets",
+    "audit_medmnist_dataset",
     "build_compute_metrics_fn",
     "build_image_processor",
     "build_deit_model",
@@ -59,11 +80,16 @@ __all__ = [
     "prepare_all_medmnist_datasets",
     "prepare_medmnist_dataset",
     "preprocess_medmnist_dataset",
+    "probe_mps_available",
     "resolve_run_config",
     "resolve_label_names",
     "run_trainer_round",
     "TrainerRoundResult",
+    "validate_all_hardware_modes",
+    "validate_dataset_hardware_modes",
     "validate_all_manifests",
+    "write_audit_report",
+    "write_hardware_validation_report",
     "write_partition_result",
     "write_preprocess_metadata",
     "write_preparation_report",
