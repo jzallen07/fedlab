@@ -7,7 +7,7 @@ Scope: MVP release gate verification for FedForge local PoC.
 
 | Gate | Description | Status | Evidence |
 |---|---|---|---|
-| G0 | Foundation gate: scaffold + tooling + CI-equivalent checks green | PASS | `.venv/bin/ruff check src tests` and `.venv/bin/pytest` passed; logs in local shell output. Hardware validation log: `artifacts/release/r01/g0_hardware_validation.log` |
+| G0 | Foundation gate: scaffold + tooling + CI-equivalent checks green | PASS | `uv run ruff check src tests` and `uv run pytest` passed; logs in local shell output. Hardware validation log: `artifacts/release/r01/g0_hardware_validation.log` |
 | G1A | FL core gate: FedAvg simulation + non-IID partitioning on BloodMNIST | PASS | `artifacts/release/r01/g1a_partition_bloodmnist.log`, `artifacts/partitions/bloodmnist_train_moderate_3clients_seed20260221.json`, `artifacts/release/r01/g1a_sim_smoke.log`, `artifacts/sim-smoke/summary.json` |
 | G1B | Dataset extension gate: DermaMNIST profile run | PASS | `artifacts/release/r01/g1b_dermamnist_profile.log`, `artifacts/profiles/dermamnist_extension_cpu/reference_metrics.json` |
 | G1C | Dataset extension gate: PathMNIST profile run | PASS | `artifacts/release/r01/g1c_pathmnist_profile.log`, `artifacts/profiles/pathmnist_extension_cpu/reference_metrics.json` |
@@ -19,16 +19,16 @@ Scope: MVP release gate verification for FedForge local PoC.
 ## Commands Executed
 
 ```bash
-.venv/bin/ruff check src tests
-.venv/bin/pytest
-.venv/bin/python scripts/validate_hardware_modes.py --dataset all
-.venv/bin/python scripts/partition_medmnist.py --dataset bloodmnist --root data/medmnist --split train --num-clients 3 --seed 20260221 --preset moderate --image-size 28 --output-dir artifacts/partitions
-.venv/bin/python scripts/sim_smoke.py
-.venv/bin/python scripts/run_phase_profile.py --profile configs/profiles/dermamnist_extension.yaml
-.venv/bin/python scripts/run_phase_profile.py --profile configs/profiles/pathmnist_extension.yaml
-.venv/bin/python scripts/run_local_distributed.py --num-clients 2 --rounds 1 --model-id hf-internal-testing/tiny-random-DeiTForImageClassification --train-examples 4 --eval-examples 2 --image-size 30 --train-mode head_only --device cpu --run-id r01-local --output-dir artifacts/release/r01/local-distributed-server
-.venv/bin/python scripts/docker_smoke.py --project-name fedlab --skip-build
-.venv/bin/python scripts/execute_notebook.py notebooks/convergence_analysis.ipynb
+uv run ruff check src tests
+uv run pytest
+uv run python scripts/validate_hardware_modes.py --dataset all
+uv run python scripts/partition_medmnist.py --dataset bloodmnist --root data/medmnist --split train --num-clients 3 --seed 20260221 --preset moderate --image-size 28 --output-dir artifacts/partitions
+uv run python scripts/sim_smoke.py
+uv run python scripts/run_phase_profile.py --profile configs/profiles/dermamnist_extension.yaml
+uv run python scripts/run_phase_profile.py --profile configs/profiles/pathmnist_extension.yaml
+uv run python scripts/run_local_distributed.py --num-clients 2 --rounds 1 --model-id hf-internal-testing/tiny-random-DeiTForImageClassification --train-examples 4 --eval-examples 2 --image-size 30 --train-mode head_only --device cpu --run-id r01-local --output-dir artifacts/release/r01/local-distributed-server
+uv run python scripts/docker_smoke.py --project-name fedlab --skip-build
+uv run python scripts/execute_notebook.py notebooks/convergence_analysis.ipynb
 ```
 
 ## Notes

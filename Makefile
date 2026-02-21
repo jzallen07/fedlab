@@ -1,16 +1,19 @@
-.PHONY: lint test sim-smoke docker-smoke central-train
+.PHONY: sync lint test sim-smoke docker-smoke central-train
+
+sync:
+	uv sync --extra dev
 
 lint:
-	ruff check src tests
+	uv run ruff check src tests
 
 test:
-	pytest
+	uv run pytest
 
 sim-smoke:
-	python scripts/sim_smoke.py
+	uv run python scripts/sim_smoke.py
 
 docker-smoke:
-	python scripts/docker_smoke.py
+	uv run python scripts/docker_smoke.py
 
 central-train:
-	python scripts/run_centralized_training.py
+	uv run python scripts/run_centralized_training.py

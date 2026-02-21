@@ -54,16 +54,14 @@ FedForge is a local-first federated learning proof-of-concept that uses:
 ## Prerequisites
 
 - Python `3.11+`
+- `uv` (`brew install uv` on macOS)
 - Node `20+` and npm
 - Docker + Docker Compose (for full-stack demo)
 
 ## Setup
 
 ```bash
-python -m venv .venv
-source .venv/bin/activate
-python -m pip install --upgrade pip
-python -m pip install -e ".[dev]"
+uv sync --extra dev
 ```
 
 ## Dataset Cache (Local to Repo)
@@ -71,15 +69,15 @@ python -m pip install -e ".[dev]"
 Cache all MedMNIST datasets directly under `data/medmnist`:
 
 ```bash
-python scripts/prepare_medmnist.py --dataset all --root data/medmnist --image-size 28
+uv run python scripts/prepare_medmnist.py --dataset all --root data/medmnist --image-size 28
 ```
 
 Optional validation + pipeline artifacts:
 
 ```bash
-python scripts/audit_medmnist.py --dataset all --root data/medmnist --image-size 28
-python scripts/partition_medmnist.py --dataset all --root data/medmnist --split train --num-clients 3 --preset moderate --image-size 28 --output-dir artifacts/partitions
-python scripts/preprocess_medmnist.py --dataset all --root data/medmnist --image-size 28 --model-id facebook/deit-tiny-patch16-224 --output-dir artifacts/preprocessed --metadata-dir artifacts/preprocess-metadata
+uv run python scripts/audit_medmnist.py --dataset all --root data/medmnist --image-size 28
+uv run python scripts/partition_medmnist.py --dataset all --root data/medmnist --split train --num-clients 3 --preset moderate --image-size 28 --output-dir artifacts/partitions
+uv run python scripts/preprocess_medmnist.py --dataset all --root data/medmnist --image-size 28 --model-id facebook/deit-tiny-patch16-224 --output-dir artifacts/preprocessed --metadata-dir artifacts/preprocess-metadata
 ```
 
 Current local footprint:
@@ -93,15 +91,15 @@ du -sh data artifacts
 Run deterministic profile checks (baseline + extensions):
 
 ```bash
-python scripts/run_phase_profile.py --profile configs/profiles/bloodmnist_baseline.yaml
-python scripts/run_phase_profile.py --profile configs/profiles/dermamnist_extension.yaml
-python scripts/run_phase_profile.py --profile configs/profiles/pathmnist_extension.yaml
+uv run python scripts/run_phase_profile.py --profile configs/profiles/bloodmnist_baseline.yaml
+uv run python scripts/run_phase_profile.py --profile configs/profiles/dermamnist_extension.yaml
+uv run python scripts/run_phase_profile.py --profile configs/profiles/pathmnist_extension.yaml
 ```
 
 Validate CPU and optional MPS behavior:
 
 ```bash
-python scripts/validate_hardware_modes.py --dataset all
+uv run python scripts/validate_hardware_modes.py --dataset all
 ```
 
 ## Centralized Baseline Training (Real Local Data)
@@ -109,7 +107,7 @@ python scripts/validate_hardware_modes.py --dataset all
 Run a full centralized train/val/test loop on local MedMNIST data and export reusable model + loss curves:
 
 ```bash
-python scripts/run_centralized_training.py \
+uv run python scripts/run_centralized_training.py \
   --dataset bloodmnist \
   --root data/medmnist \
   --image-size 28 \
@@ -136,13 +134,13 @@ make sim-smoke
 Single-process FL simulation:
 
 ```bash
-python scripts/run_simulation.py --dataset bloodmnist --device cpu --rounds 1 --num-clients 2 --train-examples-per-client 4 --eval-examples 2
+uv run python scripts/run_simulation.py --dataset bloodmnist --device cpu --rounds 1 --num-clients 2 --train-examples-per-client 4 --eval-examples 2
 ```
 
 Use centralized warm-start checkpoint in FL scripts:
 
 ```bash
-python scripts/run_simulation.py \
+uv run python scripts/run_simulation.py \
   --dataset bloodmnist \
   --model-id artifacts/centralized/<run-id>/model \
   --image-size 30 \
@@ -189,7 +187,7 @@ docker compose down
 Execute notebook code cells without Jupyter:
 
 ```bash
-python scripts/execute_notebook.py notebooks/convergence_analysis.ipynb
+uv run python scripts/execute_notebook.py notebooks/convergence_analysis.ipynb
 ```
 
 ## Dashboard Screenshots
