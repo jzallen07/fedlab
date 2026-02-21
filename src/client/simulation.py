@@ -9,9 +9,13 @@ from pathlib import Path
 
 import numpy as np
 import torch
+from flwr.common import ndarrays_to_parameters
 
 from src.client.hf_client import HFClientConfig, HFVisionClient
 from src.ml.config import load_manifest, resolve_run_config
+from src.server.artifacts import ArtifactWriter
+from src.server.config import ServerConfig
+from src.server.strategy import default_fit_metrics_aggregation_fn
 
 
 @dataclass(frozen=True)
@@ -103,6 +107,17 @@ def _aggregate_fedavg(
             aggregated.append(first.copy())
 
     return aggregated
+
+
+def _aggregate_numeric_metrics(
+    entries: list[tuple[int, dict[str, float]]],
+) -> dict[str, float]:
+    aggregated = default_fit_metrics_aggregation_fn(entries)
+    return {
+        key: float(value)
+        for key, value in aggregated.items()
+        if isinstance(value, (int, float))
+    }
 
 
 def _build_clients(
@@ -202,6 +217,17 @@ def run_local_simulation(
 
     global_parameters = clients[0].get_parameters({})
     round_summaries: list[RoundSummary] = []
+    server_output_dir = output_dir / "server"
+    artifact_writer = ArtifactWriter(server_output_dir)
+    artifact_writer.write_config(
+        ServerConfig(
+            rounds=effective_rounds,
+            min_fit_clients=effective_clients,
+            min_evaluate_clients=effective_clients,
+            min_available_clients=effective_clients,
+            output_dir=server_output_dir,
+        )
+    )
 
     for round_idx in range(1, effective_rounds + 1):
         fit_results: list[tuple[str, list[np.ndarray], int]] = []
@@ -239,15 +265,41 @@ def run_local_simulation(
             client_eval_metrics[client_id] = eval_metrics
             eval_losses.append(loss)
 
-        round_summaries.append(
-            RoundSummary(
-                round=round_idx,
-                aggregate_eval_loss=float(np.mean(eval_losses)),
-                client_train_examples=client_train_examples,
-                client_eval_examples=client_eval_examples,
-                client_train_metrics=client_train_metrics,
-                client_eval_metrics=client_eval_metrics,
-            )
+        round_summary = RoundSummary(
+            round=round_idx,
+            aggregate_eval_loss=float(np.mean(eval_losses)),
+            client_train_examples=client_train_examples,
+            client_eval_examples=client_eval_examples,
+            client_train_metrics=client_train_metrics,
+            client_eval_metrics=client_eval_metrics,
+        )
+        round_summaries.append(round_summary)
+
+        aggregated_train_metrics = _aggregate_numeric_metrics(
+            [
+                (client_train_examples[client_id], client_train_metrics[client_id])
+                for client_id in sorted(client_train_examples)
+            ]
+        )
+        aggregated_eval_metrics = _aggregate_numeric_metrics(
+            [
+                (client_eval_examples[client_id], client_eval_metrics[client_id])
+                for client_id in sorted(client_eval_examples)
+            ]
+        )
+        artifact_writer.write_round_metrics(
+            round_number=round_idx,
+            num_clients=len(clients),
+            num_examples=sum(client_train_examples.values()),
+            aggregated_metrics={
+                "aggregate_eval_loss": round_summary.aggregate_eval_loss,
+                "train": aggregated_train_metrics,
+                "eval": aggregated_eval_metrics,
+            },
+        )
+        artifact_writer.write_checkpoint(
+            round_number=round_idx,
+            parameters=ndarrays_to_parameters(global_parameters),
         )
 
     return SimulationSummary(

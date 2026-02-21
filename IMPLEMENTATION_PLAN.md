@@ -292,7 +292,7 @@ Status keys:
 ### Wave 2: FL and Telemetry Integration
 | Status | ID | Owner | Depends On | Work Chunk | Validation | Commit Snippet |
 |---|---|---|---|---|---|---|
-| [ ] | I01 | Pair | A03,B07 | Integrate end-to-end FL simulation from server and clients with persisted metrics. | Simulation integration test passes. | `feat(I01): integrate e2e fl simulation pipeline` |
+| [x] | I01 | Pair | A03,B07 | Integrate end-to-end FL simulation from server and clients with persisted metrics. | Simulation integration test passes. | `feat(I01): integrate e2e fl simulation pipeline` |
 | [x] | I02 | Eng2 | I01 | Add unit tests for HF model/data/preprocess/trainer boundaries and determinism. | Unit suite passes. | `test(I02): expand hf pipeline unit coverage` |
 | [ ] | I03 | Eng1 | I01,I02 | Add integration test for multi-round simulation with artifact assertions. | Integration suite passes. | `test(I03): add multi-round simulation integration test` |
 | [x] | M01 | Eng1 | F05 | Implement `src/monitor/app.py` with FastAPI bootstrap and health route. | Service boots and health endpoint passes. | `feat(M01): add monitor api bootstrap` |
