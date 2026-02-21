@@ -252,11 +252,11 @@ Status keys:
 ### Wave 0: Foundation
 | Status | ID | Owner | Depends On | Work Chunk | Validation | Commit Snippet |
 |---|---|---|---|---|---|---|
-| [ ] | F01 | Eng1 | None | Create core directories (`src/server`, `src/client`, `src/common`, `src/ml`, `src/monitor`, `scripts`, `tests`, `notebooks`, `apps/dashboard`). | Directory checks pass. | `chore(F01): scaffold project directories` |
-| [ ] | F02 | Eng1 | F01 | Add `pyproject.toml` with runtime and dev dependencies for FL, monitoring, and HF ML stack (`transformers`, `datasets`, `evaluate`, `accelerate`). | Editable install succeeds. | `chore(F02): initialize project metadata and hf runtime deps` |
-| [ ] | F03 | Eng2 | F02 | Add lint/test tooling (`ruff`, `pytest`) and minimal test scaffold. | `ruff` and `pytest` run clean. | `chore(F03): add lint and test harness` |
-| [ ] | F04 | Eng2 | F03 | Add task runner commands (`make lint`, `make test`, `make sim-smoke`, `make docker-smoke`). | Make targets execute successfully. | `chore(F04): add make targets for dev workflow` |
-| [ ] | F05 | Eng1 | F04 | Add CI workflow for lint and test gates. | CI config validates and local equivalent passes. | `chore(F05): add ci workflow for lint and tests` |
+| [x] | F01 | Eng1 | None | Create core directories (`src/server`, `src/client`, `src/common`, `src/ml`, `src/monitor`, `scripts`, `tests`, `notebooks`, `apps/dashboard`). | Directory checks pass. | `chore(F01): scaffold project directories` |
+| [x] | F02 | Eng1 | F01 | Add `pyproject.toml` with runtime and dev dependencies for FL, monitoring, and HF ML stack (`transformers`, `datasets`, `evaluate`, `accelerate`). | Editable install succeeds. | `chore(F02): initialize project metadata and hf runtime deps` |
+| [x] | F03 | Eng2 | F02 | Add lint/test tooling (`ruff`, `pytest`) and minimal test scaffold. | `ruff` and `pytest` run clean. | `chore(F03): add lint and test harness` |
+| [x] | F04 | Eng2 | F03 | Add task runner commands (`make lint`, `make test`, `make sim-smoke`, `make docker-smoke`). | Make targets execute successfully. | `chore(F04): add make targets for dev workflow` |
+| [x] | F05 | Eng1 | F04 | Add CI workflow for lint and test gates. | CI config validates and local equivalent passes. | `chore(F05): add ci workflow for lint and tests` |
 
 ### Wave 1A: Server and Platform Lane
 | Status | ID | Owner | Depends On | Work Chunk | Validation | Commit Snippet |
@@ -271,29 +271,29 @@ Status keys:
 ### Wave 1B: Client, Model, and Data Lane
 | Status | ID | Owner | Depends On | Work Chunk | Validation | Commit Snippet |
 |---|---|---|---|---|---|---|
-| [ ] | B00 | Eng2 | F05 | Add HF training config manifests for all dataset phases (Blood/Derma/Path) with CPU-safe defaults and optional Mac `mps` overrides. | Config validation tests pass for all manifests and device modes. | `feat(B00): add hf training manifests with cpu-safe and mps profiles` |
-| [ ] | B01 | Eng2 | F05 | Implement shared model module using pretrained `facebook/deit-tiny-patch16-224` with replaceable classifier head and freeze/unfreeze modes. | Model unit tests pass for forward shape and mode switching. | `feat(B01): add deit-tiny pretrained model module` |
-| [ ] | B02 | Eng2 | F05 | Add MedMNIST data script for `BloodMNIST`, `DermaMNIST`, and `PathMNIST` download/prep. | Script validates all three datasets can be prepared locally. | `feat(B02): add medmnist tri-dataset preparation script` |
-| [ ] | B03 | Eng2 | B02 | Implement deterministic non-IID partitioning script supporting dataset selection and client/site skew presets. | Partition determinism tests pass for all three datasets. | `feat(B03): add multi-dataset non-iid partitioner` |
-| [ ] | B04 | Eng2 | B02,B03 | Implement HF dataset preprocessing pipeline with `AutoImageProcessor`, deterministic transforms, and label mapping artifacts. | Preprocessing unit tests pass for all three datasets. | `feat(B04): add hf preprocessing pipeline for medmnist` |
-| [ ] | B05 | Eng2 | B00,B01,B04 | Implement training/evaluation pipeline using `transformers.Trainer` and `evaluate` metrics. | Trainer smoke test passes on CPU with head-only mode. | `feat(B05): add hf trainer pipeline for deit` |
-| [ ] | B06 | Eng2 | B05 | Implement Flower client wrapper around HF trainer lifecycle and model state serialization. | Client app CLI/help works and local train step emits expected metrics. | `feat(B06): add flower client wrapper for hf trainer` |
+| [x] | B00 | Eng2 | F05 | Add HF training config manifests for all dataset phases (Blood/Derma/Path) with CPU-safe defaults and optional Mac `mps` overrides. | Config validation tests pass for all manifests and device modes. | `feat(B00): add hf training manifests with cpu-safe and mps profiles` |
+| [x] | B01 | Eng2 | F05 | Implement shared model module using pretrained `facebook/deit-tiny-patch16-224` with replaceable classifier head and freeze/unfreeze modes. | Model unit tests pass for forward shape and mode switching. | `feat(B01): add deit-tiny pretrained model module` |
+| [x] | B02 | Eng2 | F05 | Add MedMNIST data script for `BloodMNIST`, `DermaMNIST`, and `PathMNIST` download/prep. | Script validates all three datasets can be prepared locally. | `feat(B02): add medmnist tri-dataset preparation script` |
+| [x] | B03 | Eng2 | B02 | Implement deterministic non-IID partitioning script supporting dataset selection and client/site skew presets. | Partition determinism tests pass for all three datasets. | `feat(B03): add multi-dataset non-iid partitioner` |
+| [x] | B04 | Eng2 | B02,B03 | Implement HF dataset preprocessing pipeline with `AutoImageProcessor`, deterministic transforms, and label mapping artifacts. | Preprocessing unit tests pass for all three datasets. | `feat(B04): add hf preprocessing pipeline for medmnist` |
+| [x] | B05 | Eng2 | B00,B01,B04 | Implement training/evaluation pipeline using `transformers.Trainer` and `evaluate` metrics. | Trainer smoke test passes on CPU with head-only mode. | `feat(B05): add hf trainer pipeline for deit` |
+| [x] | B06 | Eng2 | B05 | Implement Flower client wrapper around HF trainer lifecycle and model state serialization. | Client app CLI/help works and local train step emits expected metrics. | `feat(B06): add flower client wrapper for hf trainer` |
 | [x] | B07 | Eng2 | B06 | Implement simulation runner script for N rounds and N clients with dataset flag and phase presets. | Simulation smoke run passes on `BloodMNIST`. | `feat(B07): add phase-aware simulation runner` |
 
 ### Wave 1C: Frontend Foundation Lane
 | Status | ID | Owner | Depends On | Work Chunk | Validation | Commit Snippet |
 |---|---|---|---|---|---|---|
-| [ ] | U01 | Eng2 | F05 | Scaffold Vite React TypeScript app in `apps/dashboard`. | Build completes with no errors. | `chore(U01): scaffold dashboard app with vite react ts` |
-| [ ] | U02 | Eng2 | U01 | Configure Tailwind and shadcn/ui baseline and theme tokens. | App renders styled components. | `chore(U02): configure tailwind and shadcn` |
-| [ ] | U03 | Eng2 | U02 | Build dashboard shell layout (header, graph panel, metrics panel, event stream panel). | Responsive layout checks pass. | `feat(U03): add dashboard shell layout` |
-| [ ] | U04 | Eng2 | U03 | Add topology visualization with `reactflow` using mock node/edge states and animations. | Graph renders and state transitions animate. | `feat(U04): add realtime topology graph with mock data` |
-| [ ] | U05 | Eng2 | U03 | Add `recharts` metrics widgets for round KPIs and trend charts (mock data). | Charts render and update from mocked store. | `feat(U05): add metrics charts with recharts` |
+| [x] | U01 | Eng2 | F05 | Scaffold Vite React TypeScript app in `apps/dashboard`. | Build completes with no errors. | `chore(U01): scaffold dashboard app with vite react ts` |
+| [x] | U02 | Eng2 | U01 | Configure Tailwind and shadcn/ui baseline and theme tokens. | App renders styled components. | `chore(U02): configure tailwind and shadcn` |
+| [x] | U03 | Eng2 | U02 | Build dashboard shell layout (header, graph panel, metrics panel, event stream panel). | Responsive layout checks pass. | `feat(U03): add dashboard shell layout` |
+| [x] | U04 | Eng2 | U03 | Add topology visualization with `reactflow` using mock node/edge states and animations. | Graph renders and state transitions animate. | `feat(U04): add realtime topology graph with mock data` |
+| [x] | U05 | Eng2 | U03 | Add `recharts` metrics widgets for round KPIs and trend charts (mock data). | Charts render and update from mocked store. | `feat(U05): add metrics charts with recharts` |
 
 ### Wave 2: FL and Telemetry Integration
 | Status | ID | Owner | Depends On | Work Chunk | Validation | Commit Snippet |
 |---|---|---|---|---|---|---|
 | [ ] | I01 | Pair | A03,B07 | Integrate end-to-end FL simulation from server and clients with persisted metrics. | Simulation integration test passes. | `feat(I01): integrate e2e fl simulation pipeline` |
-| [ ] | I02 | Eng2 | I01 | Add unit tests for HF model/data/preprocess/trainer boundaries and determinism. | Unit suite passes. | `test(I02): expand hf pipeline unit coverage` |
+| [x] | I02 | Eng2 | I01 | Add unit tests for HF model/data/preprocess/trainer boundaries and determinism. | Unit suite passes. | `test(I02): expand hf pipeline unit coverage` |
 | [ ] | I03 | Eng1 | I01,I02 | Add integration test for multi-round simulation with artifact assertions. | Integration suite passes. | `test(I03): add multi-round simulation integration test` |
 | [x] | M01 | Eng1 | F05 | Implement `src/monitor/app.py` with FastAPI bootstrap and health route. | Service boots and health endpoint passes. | `feat(M01): add monitor api bootstrap` |
 | [x] | M02 | Eng1 | M01 | Define telemetry schemas and validator layer in `src/monitor/schema.py`. | Schema tests pass. | `feat(M02): add telemetry schema validation` |
@@ -301,16 +301,16 @@ Status keys:
 | [x] | M04 | Eng1 | M03,A03,B07 | Instrument server and client event emission hooks for all required event types. | Emitted events visible in monitor logs. | `feat(M04): add telemetry emission hooks to fl runtime` |
 | [x] | M05 | Eng1 | M04 | Add WebSocket broadcast manager for live event stream. | WS clients receive streamed events. | `feat(M05): add websocket event broadcast` |
 | [x] | M06 | Eng1 | M03,M04 | Add monitor control endpoints and command routing for start/pause/resume/stop actions. | Control API contract tests pass. | `feat(M06): add run control endpoints and routing` |
-| [ ] | U06 | Eng2 | U04,M05 | Implement dashboard WS client and REST snapshot hydration. | UI receives and displays live events. | `feat(U06): connect dashboard to monitor api` |
-| [ ] | U07 | Eng2 | U06,U05 | Wire live telemetry into topology and metrics state store. | Node states and charts update in real time. | `feat(U07): wire realtime telemetry into dashboard views` |
-| [ ] | U08 | Eng2 | U07 | Add event log table and node detail drawer for drill-down debugging. | UI interaction tests pass. | `feat(U08): add event log and node detail inspector` |
-| [ ] | U09 | Eng2 | U06,M06 | Add dashboard control panel for run start/pause/resume/stop with action feedback. | UI can trigger and display control state transitions. | `feat(U09): add operator control panel` |
+| [x] | U06 | Eng2 | U04,M05 | Implement dashboard WS client and REST snapshot hydration. | UI receives and displays live events. | `feat(U06): connect dashboard to monitor api` |
+| [x] | U07 | Eng2 | U06,U05 | Wire live telemetry into topology and metrics state store. | Node states and charts update in real time. | `feat(U07): wire realtime telemetry into dashboard views` |
+| [x] | U08 | Eng2 | U07 | Add event log table and node detail drawer for drill-down debugging. | UI interaction tests pass. | `feat(U08): add event log and node detail inspector` |
+| [x] | U09 | Eng2 | U06,M06 | Add dashboard control panel for run start/pause/resume/stop with action feedback. | UI can trigger and display control state transitions. | `feat(U09): add operator control panel` |
 
 ### Wave 2B: Dataset Phase Validation
 | Status | ID | Owner | Depends On | Work Chunk | Validation | Commit Snippet |
 |---|---|---|---|---|---|---|
-| [ ] | D00 | Eng2 | B04 | Add data quality and preprocessing audit pipeline (class balance, split integrity, leakage checks) for all three datasets. | Audit report artifacts generated for Blood/Derma/Path. | `feat(D00): add medmnist preprocessing and data quality audits` |
-| [ ] | D00A | Eng2 | B05 | Add hardware-mode validation script for `cpu` and optional `mps` detection/fallback behavior. | Validation shows deterministic CPU baseline and successful fallback behavior. | `test(D00A): add cpu and mps fallback validation` |
+| [x] | D00 | Eng2 | B04 | Add data quality and preprocessing audit pipeline (class balance, split integrity, leakage checks) for all three datasets. | Audit report artifacts generated for Blood/Derma/Path. | `feat(D00): add medmnist preprocessing and data quality audits` |
+| [x] | D00A | Eng2 | B05 | Add hardware-mode validation script for `cpu` and optional `mps` detection/fallback behavior. | Validation shows deterministic CPU baseline and successful fallback behavior. | `test(D00A): add cpu and mps fallback validation` |
 | [ ] | D01 | Eng2 | I03,D00,D00A | Establish baseline FL run profile for `BloodMNIST` (rounds, clients, batch size) and store reference metrics. | Repeatable baseline run completes on laptop CPU. | `feat(D01): add bloodmnist baseline run profile` |
 | [ ] | D02 | Eng2 | D01 | Add and validate `DermaMNIST` run profile with tuned local CPU settings. | DermaMNIST profile run completes and metrics export is valid. | `feat(D02): add dermamnist extension run profile` |
 | [ ] | D03 | Eng2 | D02 | Add and validate `PathMNIST` run profile with constrained rounds for local CPU runtime. | PathMNIST profile run completes and metrics export is valid. | `feat(D03): add pathmnist extension run profile` |
