@@ -75,6 +75,7 @@ def test_load_phase_run_profile(tmp_path: Path) -> None:
     [
         ("configs/profiles/bloodmnist_baseline.yaml", "bloodmnist"),
         ("configs/profiles/dermamnist_extension.yaml", "dermamnist"),
+        ("configs/profiles/pathmnist_extension.yaml", "pathmnist"),
     ],
 )
 def test_repository_profile_configs_load(profile_path: str, dataset_id: str) -> None:
