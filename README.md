@@ -71,23 +71,21 @@ python -m pip install -e ".[dev]"
 Cache all MedMNIST datasets directly under `data/medmnist`:
 
 ```bash
-python scripts/prepare_medmnist.py --dataset all --root data/medmnist --image-size 224
+python scripts/prepare_medmnist.py --dataset all --root data/medmnist --image-size 28
 ```
 
 Optional validation + pipeline artifacts:
 
 ```bash
-python scripts/audit_medmnist.py --dataset all --root data/medmnist
-python scripts/partition_medmnist.py --dataset all --root data/medmnist --split train --num-clients 3 --preset moderate --output-dir artifacts/partitions
-python scripts/preprocess_medmnist.py --dataset all --root data/medmnist --model-id facebook/deit-tiny-patch16-224 --output-dir artifacts/preprocessed --metadata-dir artifacts/preprocess-metadata
+python scripts/audit_medmnist.py --dataset all --root data/medmnist --image-size 28
+python scripts/partition_medmnist.py --dataset all --root data/medmnist --split train --num-clients 3 --preset moderate --image-size 28 --output-dir artifacts/partitions
+python scripts/preprocess_medmnist.py --dataset all --root data/medmnist --image-size 28 --model-id facebook/deit-tiny-patch16-224 --output-dir artifacts/preprocessed --metadata-dir artifacts/preprocess-metadata
 ```
 
-Current local footprint (example from this repo state):
+Current local footprint:
 
 ```bash
 du -sh data artifacts
-# 249M data
-#  88M artifacts
 ```
 
 ## CPU-Safe Phase Profiles
@@ -191,4 +189,4 @@ python scripts/execute_notebook.py notebooks/convergence_analysis.ipynb
 ## Planning and Execution Doc
 
 - Implementation plan and two-engineer commit chunks: `IMPLEMENTATION_PLAN.md`
-
+- Release readiness checklist and gate evidence: `docs/release-readiness.md`
