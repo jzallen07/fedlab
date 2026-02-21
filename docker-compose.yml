@@ -112,3 +112,21 @@ services:
       - "8090:8090"
     volumes:
       - ./artifacts/monitor:/app/artifacts/monitor
+
+  dashboard:
+    image: node:20-alpine
+    working_dir: /workspace/apps/dashboard
+    environment:
+      VITE_MONITOR_PROXY_TARGET: http://monitor-api:8090
+    command:
+      ["sh", "-c", "npm ci && npm run dev -- --host 0.0.0.0 --port 5173"]
+    ports:
+      - "5173:5173"
+    volumes:
+      - .:/workspace
+      - dashboard_node_modules:/workspace/apps/dashboard/node_modules
+    depends_on:
+      - monitor-api
+
+volumes:
+  dashboard_node_modules:

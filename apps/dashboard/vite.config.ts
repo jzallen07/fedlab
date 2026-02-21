@@ -2,6 +2,8 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import path from 'node:path'
 
+const monitorProxyTarget = process.env.VITE_MONITOR_PROXY_TARGET ?? 'http://127.0.0.1:8090'
+
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
@@ -13,7 +15,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/monitor': {
-        target: 'http://127.0.0.1:8090',
+        target: monitorProxyTarget,
         changeOrigin: true,
         ws: true,
         rewrite: (value) => value.replace(/^\/monitor/, ''),
@@ -23,7 +25,7 @@ export default defineConfig({
   preview: {
     proxy: {
       '/monitor': {
-        target: 'http://127.0.0.1:8090',
+        target: monitorProxyTarget,
         changeOrigin: true,
         ws: true,
         rewrite: (value) => value.replace(/^\/monitor/, ''),

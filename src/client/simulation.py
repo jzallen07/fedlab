@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import random
 from dataclasses import asdict, dataclass
 from pathlib import Path
 
@@ -70,6 +71,14 @@ class _SyntheticVisionDataset(torch.utils.data.Dataset):
             "pixel_values": self.pixel_values[index],
             "labels": self.labels[index],
         }
+
+
+def _set_global_seeds(seed: int) -> None:
+    """Set deterministic global RNG seeds for repeatable simulation runs."""
+
+    random.seed(seed)
+    np.random.seed(seed)
+    torch.manual_seed(seed)
 
 
 def _aggregate_fedavg(
@@ -174,6 +183,8 @@ def run_local_simulation(
     effective_rounds = rounds if rounds is not None else resolved.rounds
     effective_clients = num_clients if num_clients is not None else resolved.num_clients
     effective_train_mode = train_mode if train_mode is not None else resolved.train_mode
+
+    _set_global_seeds(resolved.run_seed)
 
     clients = _build_clients(
         dataset_id=dataset_id,

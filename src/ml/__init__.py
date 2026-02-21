@@ -50,6 +50,14 @@ from src.ml.preprocess import (
     resolve_label_names,
     write_preprocess_metadata,
 )
+from src.ml.run_profile import (
+    PhaseProfileReport,
+    PhaseRunProfile,
+    ProfileRunSummary,
+    load_phase_run_profile,
+    run_phase_profile,
+    write_phase_profile_report,
+)
 from src.ml.trainer import TrainerRoundResult, create_trainer, run_trainer_round
 
 __all__ = [
@@ -60,7 +68,10 @@ __all__ = [
     "ManifestValidationError",
     "MedMNISTPreparationSummary",
     "PartitionResult",
+    "PhaseProfileReport",
+    "PhaseRunProfile",
     "PreprocessMetadata",
+    "ProfileRunSummary",
     "ResolvedRunConfig",
     "SplitAudit",
     "SUPPORTED_MEDMNIST_DATASETS",
@@ -80,9 +91,11 @@ __all__ = [
     "prepare_all_medmnist_datasets",
     "prepare_medmnist_dataset",
     "preprocess_medmnist_dataset",
+    "load_phase_run_profile",
     "probe_mps_available",
     "resolve_run_config",
     "resolve_label_names",
+    "run_phase_profile",
     "run_trainer_round",
     "TrainerRoundResult",
     "validate_all_hardware_modes",
@@ -91,6 +104,7 @@ __all__ = [
     "write_audit_report",
     "write_hardware_validation_report",
     "write_partition_result",
+    "write_phase_profile_report",
     "write_preprocess_metadata",
     "write_preparation_report",
 ]

@@ -1,0 +1,21 @@
+profile_id: bloodmnist_baseline_cpu
+dataset_id: bloodmnist
+description: >
+  CPU-safe deterministic baseline profile for Phase A BloodMNIST simulation.
+
+simulation:
+  rounds: 1
+  num_clients: 2
+  train_mode: head_only
+  requested_device: cpu
+  model_id: facebook/deit-tiny-patch16-224
+  image_size: 224
+  train_examples_per_client: 4
+  eval_examples: 2
+
+training_expectations:
+  per_device_train_batch_size: 8
+
+repeatability:
+  runs: 2
+  loss_tolerance: 1.0e-9
