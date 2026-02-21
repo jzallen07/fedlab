@@ -1,4 +1,4 @@
-.PHONY: lint test sim-smoke docker-smoke
+.PHONY: lint test sim-smoke docker-smoke central-train
 
 lint:
 	ruff check src tests
@@ -11,3 +11,6 @@ sim-smoke:
 
 docker-smoke:
 	python scripts/docker_smoke.py
+
+central-train:
+	python scripts/run_centralized_training.py

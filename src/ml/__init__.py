@@ -8,6 +8,7 @@ from src.ml.audit import (
     audit_medmnist_dataset,
     write_audit_report,
 )
+from src.ml.centralized import CentralizedTrainingReport, run_centralized_training
 from src.ml.config import (
     ManifestValidationError,
     ResolvedRunConfig,
@@ -62,6 +63,7 @@ from src.ml.trainer import TrainerRoundResult, create_trainer, run_trainer_round
 
 __all__ = [
     "MODEL_ID_DEIT_TINY",
+    "CentralizedTrainingReport",
     "DatasetAuditReport",
     "DatasetHardwareValidation",
     "LeakageAudit",
@@ -96,6 +98,7 @@ __all__ = [
     "resolve_run_config",
     "resolve_label_names",
     "run_phase_profile",
+    "run_centralized_training",
     "run_trainer_round",
     "TrainerRoundResult",
     "validate_all_hardware_modes",

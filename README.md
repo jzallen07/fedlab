@@ -104,6 +104,27 @@ Validate CPU and optional MPS behavior:
 python scripts/validate_hardware_modes.py --dataset all
 ```
 
+## Centralized Baseline Training (Real Local Data)
+
+Run a full centralized train/val/test loop on local MedMNIST data and export reusable model + loss curves:
+
+```bash
+python scripts/run_centralized_training.py \
+  --dataset bloodmnist \
+  --root data/medmnist \
+  --image-size 28 \
+  --device auto \
+  --epochs 3
+```
+
+Artifacts are written under `artifacts/centralized/<run-id>/`:
+
+- `model/` (HF checkpoint, reusable as `--model-id` for FL scripts)
+- `summary.json`
+- `train_loss_curve.csv`
+- `eval_loss_curve.csv`
+- `loss_curve.svg`
+
 ## Simulation and Test Commands
 
 ```bash
@@ -116,6 +137,18 @@ Single-process FL simulation:
 
 ```bash
 python scripts/run_simulation.py --dataset bloodmnist --device cpu --rounds 1 --num-clients 2 --train-examples-per-client 4 --eval-examples 2
+```
+
+Use centralized warm-start checkpoint in FL scripts:
+
+```bash
+python scripts/run_simulation.py \
+  --dataset bloodmnist \
+  --model-id artifacts/centralized/<run-id>/model \
+  --image-size 30 \
+  --device cpu \
+  --rounds 1 \
+  --num-clients 2
 ```
 
 ## Full Docker Demo (Recommended)
